@@ -2,8 +2,8 @@ const holes = document.querySelectorAll('.hole');
 const moles = document.querySelectorAll('.mole');
 const startButton = document.querySelector('#start');
 // TODO: Add the missing query selectors:
-const score; // Use querySelector() to get the score element
-const timerDisplay; // use querySelector() to get the timer element.
+const score = document.querySelector('#score'); // Use querySelector() to get the score element
+const timerDisplay = document.querySelector('#timer'); // use querySelector() to get the timer element.
 
 let time = 0;
 let timer;
@@ -20,8 +20,9 @@ let difficulty = "hard";
  * will return a random integer between 10 and 200.
  *
  */
-function randomInteger(min, max) {
-  // return Math.floor(Math.random() * (max - min + 1)) + min;
+function randomInteger(min, max) 
+{
+   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 /**
@@ -39,9 +40,22 @@ function randomInteger(min, max) {
  * setDelay("hard") //> returns 856 (returns a random number between 600 and 1200).
  *
  */
-function setDelay(difficulty) {
-  // TODO: Write your code here.
-  
+function setDelay(difficulty) 
+{ // TODO: Write your code here.
+  // The following is my code.
+  // Will write conditionals comparing string literals
+  if(difficulty === 'easy')
+  {
+    return 1500;
+  }
+  else if (difficulty === 'normal')
+  {
+    return 1000;
+  }
+  else
+  { //Utilized the previous existing randomInteger function
+    return randomInteger(600, 1200); //generates a number between 600 and 1200.
+  }
 }
 
 /**
@@ -58,9 +72,34 @@ function setDelay(difficulty) {
  * const holes = document.querySelectorAll('.hole');
  * chooseHole(holes) //> returns one of the 9 holes that you defined
  */
-function chooseHole(holes) {
+function chooseHole(holes) 
+{
   // TODO: Write your code here.
+  //generates a random number between 0 and 8 and assigns it to a variable
+  let index = randomInteger(0 , 8);
+  const hole = holes[index]; //followed the example above.
+  if (hole === lastHole) //Comparing the actual hole elements and not just the indexes.
+  {
+    return chooseHole(holes);
+  }
+  lastHole = hole;
+  /*
+    What I don't understand is if 'lastHole has been previous defined, or if I am going to need to?
+    and if so, shouldn't the variable last hole be present outside of this scope to keep a global
+    storage of the lasthole generated?
+    ***Correction, I see that lastHole was defined at the beginning of this project. Now it makes
+    more sense.
+  */
 
+ //Will proceed with the condition and check if the current hole matches the 'lastHole', if so,
+ //generate a new randomInteger.
+
+ /*
+   Misread the instructions and was confident in the code I have written.
+   Thankfully, out of curiosity, I read the REPL and corrected my code. I understand where
+   my mistakes were.
+ */
+  return hole;
 }
 
 /**
@@ -128,9 +167,10 @@ function showAndHide(hole, delay){
 * a given hole. It returns the hole.
 *
 */
-function toggleVisibility(hole){
+function toggleVisibility(hole)
+{
   // TODO: add hole.classList.toggle so that it adds or removes the 'show' class.
-  
+  hole.classList.toggle('show');
   return hole;
 }
 
