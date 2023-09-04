@@ -148,8 +148,8 @@ function gameOver()
 *
 */
 function showUp() {
-  let delay = 0; // TODO: Update so that it uses setDelay()
-  const hole = 0;  // TODO: Update so that it use chooseHole()
+  let delay = setDelay(difficulty); // TODO: Update so that it uses setDelay()
+  const hole = chooseHole(holes);  // TODO: Update so that it use chooseHole()
   return showAndHide(hole, delay);
 }
 
@@ -197,8 +197,11 @@ function toggleVisibility(hole)
 * for your implementation:
 *
 */
-function updateScore() {
+function updateScore() 
+{
   // TODO: Write your code here
+  points++;
+  score.textContent = points;
 
   return points;
 }
@@ -210,10 +213,11 @@ function updateScore() {
 * the points.
 *
 */
-function clearScore() {
+function clearScore() 
+{
   // TODO: Write your code here
-  // points = 0;
-  // score.textContent = points;
+   points = 0;
+   score.textContent = points;
   return points;
 }
 
@@ -222,10 +226,15 @@ function clearScore() {
 * Updates the control board with the timer if time > 0
 *
 */
-function updateTimer() {
+function updateTimer() 
+{
   // TODO: Write your code here.
   // hint: this code is provided to you in the instructions.
-  
+  if (time > 0)
+  {
+    time -= 1;
+    timerDisplay.textContent = time;
+  }
   return time;
 }
 
@@ -235,9 +244,10 @@ function updateTimer() {
 * the updateTimer function get called. This function is already implemented
 *
 */
-function startTimer() {
+function startTimer() 
+{
   // TODO: Write your code here
-  // timer = setInterval(updateTimer, 1000);
+  timer = setInterval(updateTimer, 1000);
   return timer;
 }
 
@@ -249,9 +259,11 @@ function startTimer() {
 * the moles.
 *
 */
-function whack(event) {
+function whack(event) 
+{
   // TODO: Write your code here.
   // call updateScore()
+  updateScore();
   return points;
 }
 
@@ -260,9 +272,21 @@ function whack(event) {
 * Adds the 'click' event listeners to the moles. See the instructions
 * for an example on how to set event listeners using a for loop.
 */
-function setEventListeners(){
+function setEventListeners()
+{
   // TODO: Write your code here
+  /*
+    The following code is my own. Will check the REPL if it is
+    incorrect, if so, will comment out and implement the correct
+    code.
+   */
+  /*moles.forEach((mole) => 
+  {
+    mole.addEventListener( 'click', whack(event));
+  }); */  //I don't think this code was working as it should have.
+  // Using the repl code
 
+  moles.forEach(mole => mole.addEventListener('click', whack));
   return moles;
 }
 
@@ -286,6 +310,7 @@ function setDuration(duration) {
 function stopGame(){
   // stopAudio(song);  //optional
   clearInterval(timer);
+  //clearScore(); //This is not instructed to do so.
   return "game stopped";
 }
 
@@ -295,9 +320,20 @@ function stopGame(){
 * is clicked.
 *
 */
-function startGame(){
+function startGame()
+{
+  clearScore(); // Not instructed to do so, but runs as I would like it.
+  // Adding this with the two other functions makes the npm test pass!!!
+  setEventListeners(); //When this line is commented out, passes tests.
+  //But will NOT add the points.
+  startTimer(); 
+  /** No part of the instructions did it state that this function
+   * needed to be here. Running npm test helped with the 
+   * troubleshooting.
+   */
   setDuration(10);
   showUp();
+  //gameOver();
   return "game started";
 }
 
