@@ -5,7 +5,7 @@
   <body>
     <!--Here we go, first line of code for this project-->
     <!--whack-a-mole is just a stand in for now.-->
-    <h1 id="title">whack-a-mole</h1>
+    <h1 id="title">Whack-A-Loki</h1>
 
     <div>
       <div>
@@ -18,6 +18,17 @@
           <h2><span id="timer">0</span> seconds left.</h2>
       </div>
     </div>
+    <!-- Adding a drop down menu for difficulty-->
+    <div class="select">
+      <select name="difficulty" id="difficulty-select">
+        <option value="">--Please choose a Difficulty--</option>
+        <option value="easy">Easy</option>
+        <option value="normal">Normal</option>
+        <option value="hard">Hard -Default-</option>
+      </select>
+    </div>
+
+
     <!--Adding the addition moles and holes-->
 
     <div class="grid">
@@ -85,5 +96,6 @@
     </div> <!--End of the grid div-->
 
     <script src="./src/index.js"></script>
+
   </body>
 </html>

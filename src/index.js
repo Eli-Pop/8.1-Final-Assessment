@@ -9,7 +9,78 @@ let time = 0;
 let timer;
 let lastHole = 0;
 let points = 0;
-let difficulty = "hard";
+let difficulty = "hard"; //Leaving this as the default.
+
+//Creating this function so the player can select difficulty before and at the end
+//of each play through.
+function selectDifficulty ()
+{
+  let choice = document.querySelector("#difficulty-select");
+  choice.addEventListener("change", () =>
+  {
+    console.log(choice.value); 
+    if (choice.value == "easy") 
+  {
+    difficulty = "easy";
+    console.log('easy selected');
+  }
+  else if (choice.value == "normal")
+  {
+    difficulty = "normal";
+    console.log('normal selected');
+  }
+  else
+  {
+    difficulty = "hard";
+    console.log('hard was selected');
+    /*
+      In case someone just presses start, the game will play
+      in hard difficulty by default.
+      If the player selects option 0, which is no difficulty
+      selected, it will play as hard by default.
+      Then if they select any difficulty, they can always go
+      to any of the options.
+    */
+  }
+  });
+ 
+  // Getting the selection from the drop down menu.
+   // let choice = document.getElementById("difficulty-select").length;
+    //console.log(choice);
+}
+
+//I want to see if I can get the hit sound to play when the targets are clicked.
+const hitSound = new Audio('../assets/hitv2.mp3'); // I need this to be a global variable
+let thorSong = new Audio('../assets/thor.mp3');
+
+//I am very confused on how and why this works on the REPL
+//It seems that these two helpfunctions go inside of each other.
+function playAudio(audioObject)
+{
+  audioObject.play();
+}
+//These don't seem to be built in functions.
+//Perhaps they work since the object is bounced
+//in and out of two functions?
+function play(audioObject)
+{
+  playAudio(audioObject);
+}
+//This is to stop the song at end game.
+function stopAudio(audioObject)
+{
+  audioObject.pause();
+  thorSong = new Audio('../assets/thor.mp3');
+  // LOL since audioObject.loop = false; is not working
+  // I just reassigned the same audio file back into its own vairiable
+  // Inevatably, "restarting" the song every time the Start button is clicked.
+}
+//I don't want the song to loop, so maybe I have to invoke this instead.
+function loopAudio(audioObject)
+{
+  audioObject.loop = false;
+  playAudio(audioObject);
+}
 
 /**
  * Generates a random integer within a range.
@@ -133,6 +204,8 @@ function gameOver()
    else
    {
     gameStopped = stopGame();
+    //This is where I think the pause audio should go
+    stopAudio(thorSong);
     return gameStopped;
    }
      
@@ -263,7 +336,11 @@ function whack(event)
 {
   // TODO: Write your code here.
   // call updateScore()
+
   updateScore();
+  //Then I will call on the other audio funtion here in which it 
+  //itself gets called on the other function.
+  play(hitSound);
   return points;
 }
 
@@ -285,8 +362,9 @@ function setEventListeners()
     mole.addEventListener( 'click', whack(event));
   }); */  //I don't think this code was working as it should have.
   // Using the repl code
-
   moles.forEach(mole => mole.addEventListener('click', whack));
+  //This is where I am deciding to run the play sound for the song
+  loopAudio(thorSong);
   return moles;
 }
 
@@ -320,6 +398,9 @@ function stopGame(){
 * is clicked.
 *
 */
+//Would like to select difficulty before clicking on the start of the game.
+selectDifficulty();
+
 function startGame()
 {
   clearScore(); // Not instructed to do so, but runs as I would like it.
