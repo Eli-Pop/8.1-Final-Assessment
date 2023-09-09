@@ -15,10 +15,11 @@ let difficulty = "hard"; //Leaving this as the default.
 //of each play through.
 function selectDifficulty ()
 {
-  let choice = document.querySelector("#difficulty-select");
+  let choice = document.querySelector("#difficulty-select"); //Acquiring the select element/data.
   choice.addEventListener("change", () =>
   {
-    console.log(choice.value); 
+    console.log(choice.value); // I was testing through the page's console to make sure I am understanding what was going on.
+    // With each proceeding conditions, checking if the choice.value is equivalent to the choice selected.
     if (choice.value == "easy") 
   {
     difficulty = "easy";
@@ -50,7 +51,9 @@ function selectDifficulty ()
 }
 
 //I want to see if I can get the hit sound to play when the targets are clicked.
+//This is the sound for when the player clicks on the moles.
 const hitSound = new Audio('../assets/hitv2.mp3'); // I need this to be a global variable
+//This is the audio file for the back ground music, assigning to variable called thorSong
 let thorSong = new Audio('../assets/thor.mp3');
 
 //I am very confused on how and why this works on the REPL
@@ -69,7 +72,7 @@ function play(audioObject)
 //This is to stop the song at end game.
 function stopAudio(audioObject)
 {
-  audioObject.pause();
+  audioObject.pause(); //This will just pause the back ground music by the end of game.
   thorSong = new Audio('../assets/thor.mp3');
   // LOL since audioObject.loop = false; is not working
   // I just reassigned the same audio file back into its own vairiable
@@ -78,7 +81,7 @@ function stopAudio(audioObject)
 //I don't want the song to loop, so maybe I have to invoke this instead.
 function loopAudio(audioObject)
 {
-  audioObject.loop = false;
+  audioObject.loop = false; //This did not end up working as I intended but left this in the code and worked with it.
   playAudio(audioObject);
 }
 
@@ -414,7 +417,7 @@ function startGame()
    */
   setDuration(10);
   showUp();
-  //gameOver();
+  //gameOver(); //I Tried this option here but did not work out as I intended.
   return "game started";
 }
 
